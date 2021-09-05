@@ -52,7 +52,7 @@ def lambda_handler(event, context):
         # Generate the selected columns for Firehose Delivery Stream.
         new_data = {
             "id": data_drinks[0],
-            "name":    data_drinks[1],
+            "name": data_drinks[1],
             "abv": data_drinks[2],
             "ibu": data_drinks[3],
             "target_fg": data_drinks[4],
@@ -81,3 +81,4 @@ def lambda_handler(event, context):
         )
 
     return {'records': output}
+
