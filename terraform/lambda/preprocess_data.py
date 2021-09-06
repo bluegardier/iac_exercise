@@ -76,7 +76,7 @@ def lambda_handler(event, context):
         s3.put_object(
             Body=csvio.getvalue(),
             ContentType='text/csv',
-            Bucket='bgardier-clean-bucket',
+            Bucket='bgardier-clean-drinks-bucket-rj',
             Key='clean_drinks_{}.csv'.format(now)
         )
 

@@ -40,15 +40,15 @@ variable "lambda_timeout" {
 
 variable "glue_bucket_name" {
   description = "Seconds until lambda returns a timeout."
-  default     = "bgardier-glue-bucket"
+  default     = "bgardier-glue-drinks-bucket-rj"
 }
 
 variable "clean_bucket_name" {
   description = "Seconds until lambda returns a timeout."
-  default     = "bgardier-clean-bucket"
+  default     = "bgardier-clean-drinks-bucket-rj"
 }
 
 variable "raw_bucket_name" {
   description = "Seconds until lambda returns a timeout."
-  default     = "bgardier-raw-bucket"
+  default     = "bgardier-raw-drinks-bucket-rj"
 }
