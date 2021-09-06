@@ -262,7 +262,7 @@ resource "aws_iam_policy" "glue_policy" {
           "s3:PutObject"
         ],
         "Resource" : [
-          "arn:aws:s3:::${local.glue_bucket_name}*"
+          "arn:aws:s3:::${var.glue_bucket_name}*"
         ]
       },
       {

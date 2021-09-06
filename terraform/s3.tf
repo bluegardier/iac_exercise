@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "glue_bucket" {
-  bucket = "k${local.glue_bucket_name}"
+  bucket = var.glue_bucket_name
   acl    = "private"
 
   versioning {
@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "glue_bucket" {
 }
 
 resource "aws_s3_bucket" "raw_bucket" {
-  bucket = "kbgardier-raw-bucket"
+  bucket = var.raw_bucket_name
   acl    = "private"
 
   versioning {
@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "raw_bucket" {
 }
 
 resource "aws_s3_bucket" "clean_bucket" {
-  bucket = "kbgardier-clean-bucket"
+  bucket = var.clean_bucket_name
   acl    = "private"
 
   versioning {
