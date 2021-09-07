@@ -48,7 +48,7 @@ class TrainerRegressor:
             runID = run.info.run_uuid
             experimentID = run.info.experiment_id
 
-            if optimal_param == True:
+            if optimal_param is True:
                 self._model = self._model_opt
                 kfold_scores = cross_val_score(
                     self._model,
