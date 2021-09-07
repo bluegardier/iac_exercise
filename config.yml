@@ -2,12 +2,76 @@
 package_name: iac_exercise
 
 # AWS Resources
-QUERY: 'SELECT * FROM "picpay_drinks"."glue_bucket_bgardier"'
-DRINKS_FOLDER_TABLE: "drinks_table/"
+query: 'SELECT * FROM "picpay_drinks"."glue_bucket_bgardier"'
+drinks_folder_table: "drinks_table/"
 
+# Data Files
+training_data_file: drinks_data_train.csv
+new_data_file: drinks_data_valid.csv
+pytest_df: fixture_test_df.csv
+
+# Pipeline
+pipeline_name: regression_model_iac
+pipeline_save_file: regression_model_output_iac
 
 # Variables
 target: ibu
 
-# Random State Split Seed
-randon_state_split: 16
+# TargetDiffTransformer Variables
+diff_create_var:
+  - target_fg
+  - target_og
+
+target_dg: target_dg
+
+# FakeVariableTransformer Variables
+fake_create_var:
+  - ph
+  - target_og
+
+fake_var: fake_var
+
+# Split Configuration
+random_state: 16
+test_size: 0.35
+
+# Variables for Upper Bound Filter
+filter_ph: ph
+filter_srm: srm
+filter_ebc: ebc
+filter_ibu: ibu
+
+ph_limit: 14
+srm_limit: 40
+ebc_limit: 80
+ibu_limit: 120
+
+# Variables for Missing Imputer
+imputer_variables:
+  - abv
+  - target_fg
+  - target_og
+  - ebc
+  - srm
+  - ph
+
+# Unwanted Variables for ML
+to_drop_train:
+  - id
+  - name
+  - ibu
+
+# CatBoost Best Parameters
+catboost_best_params:
+  iterations: 450.0
+  learning_rate: 0.01
+  max_depth: 2.0
+
+# Pipeline Transformer Names
+mean_median_imputer_name: mediam_missing_imputer
+target_diff_transformer_name: create_target_diff_var
+fake_variable_transformer_name: create_target_fake_var
+catboost_model_name: catboost_model
+
+# Imputation Method
+meam_median_imputation_method: median
