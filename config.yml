@@ -1,0 +1,13 @@
+# Package Overview
+package_name: iac_exercise
+
+# AWS Resources
+QUERY: 'SELECT * FROM "picpay_drinks"."glue_bucket_bgardier"'
+DRINKS_FOLDER_TABLE: "drinks_table/"
+
+
+# Variables
+target: ibu
+
+# Random State Split Seed
+randon_state_split: 16
