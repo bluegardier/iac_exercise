@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import os
 
 # TODO: FIX VERSION VARIABLE PROPERLY
 # Model package name
