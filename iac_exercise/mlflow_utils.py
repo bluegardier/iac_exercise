@@ -1,8 +1,7 @@
-import numpy as np
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn import metrics
-
 import mlflow
+import numpy as np
+from sklearn import metrics
+from sklearn.model_selection import GridSearchCV, cross_val_score, train_test_split
 
 
 class TrainerRegressor:
@@ -41,9 +40,7 @@ class TrainerRegressor:
         except TypeError:
             self._model_opt = self._model.set_params(**self.best_params)
 
-    def mlflow_run(
-            self, model_name, r_name="default_experiment", optimal_param=False
-    ):
+    def mlflow_run(self, model_name, r_name="default_experiment", optimal_param=False):
         with mlflow.start_run(run_name=r_name) as run:
             runID = run.info.run_uuid
             experimentID = run.info.experiment_id
@@ -51,10 +48,8 @@ class TrainerRegressor:
             if optimal_param is True:
                 self._model = self._model_opt
                 kfold_scores = cross_val_score(
-                    self._model,
-                    self.X_train,
-                    self.y_train,
-                    cv=10)
+                    self._model, self.X_train, self.y_train, cv=10
+                )
 
                 mlflow.log_metric("average_accuracy", kfold_scores.mean())
                 mlflow.log_metric("std_accuracy", kfold_scores.std())
