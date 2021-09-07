@@ -4,7 +4,7 @@
 
 The focus of this challenge is to build up a data pipeline architecture on AWS using Terraform. At the end of this process, we should be able to fetch a structured table from s3 to train a machine learning model.
 
-Regarding the machine learning problem, this is a regression type problem that aims to estimates the **ibu** (International Bitterness Units) of a beer.
+Regarding the machine learning problem, it's a regression type problem that aims to estimates the **ibu** (International Bitterness Units) of a beer.
 ### Data Dependencies
 We are using the following Data Source:
 
