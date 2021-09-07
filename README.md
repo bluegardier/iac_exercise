@@ -1,3 +1,5 @@
+![Passing Status](https://github.com/bluegardier/iac_exercise/actions/workflows/github-ci.yml/badge.svg)
+
 # PicPay' Technical Challenge: MLOps
 
 The focus of this challenge is to build up a data pipeline architecture on AWS using Terraform. At the end of this process, we should be able to fetch a structured table from s3 to train a machine learning model.
