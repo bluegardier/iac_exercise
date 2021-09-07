@@ -12,7 +12,6 @@ catboost==0.26.1
 
 # Testing
 tox==3.24.3
-pytest==6.2.5
 
 # Experiment Tracking
 mlflow==1.20.2
