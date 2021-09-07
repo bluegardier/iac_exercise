@@ -27,7 +27,7 @@ class QueryAthena:
         self.aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
         self.query = query
 
-    def load_conf(self, q):
+    def load_conf(self, q: str):
         """
         Creates a connection with AWS Athena for querying the data.
 
