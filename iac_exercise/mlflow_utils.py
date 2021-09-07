@@ -21,7 +21,7 @@ class TrainerRegressor:
             self._model = estimator(**params)
             self._params = params
         except TypeError:
-            self._model = estimator(params)
+            self._model = estimator.set_params(**params)
             self._params = params
 
     @property

@@ -48,6 +48,7 @@ class ModelConfig(BaseModel):
     ebc_limit: int
     ibu_limit: int
     catboost_best_params: Dict[str, float]
+    catboost_logging_state: str
     mean_median_imputer_name: str
     target_diff_transformer_name: str
     fake_variable_transformer_name: str

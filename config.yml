@@ -61,11 +61,13 @@ to_drop_train:
   - name
   - ibu
 
-# CatBoost Best Parameters
+# CatBoost Configuration
 catboost_best_params:
   iterations: 450.0
   learning_rate: 0.01
   max_depth: 2.0
+
+catboost_logging_state: Silent
 
 # Pipeline Transformer Names
 mean_median_imputer_name: mediam_missing_imputer
