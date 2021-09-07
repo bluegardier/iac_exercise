@@ -1,11 +1,22 @@
+from typing import Dict
+
 import mlflow
 import numpy as np
+import pandas as pd
 from sklearn import metrics
 from sklearn.model_selection import GridSearchCV, cross_val_score, train_test_split
 
 
 class TrainerRegressor:
-    def __init__(self, estimator, params={}):
+    """
+    A class to train models with mlflow context.
+    The class takes the input model and performs
+    gridsearch as well. However, note that gridsearch_tuning
+    is optional. If you opt to not use it, the optimal_param
+    in mlflow_run method must be set to False.
+    """
+
+    def __init__(self, estimator, params: Dict = {}):
         try:
             self._model = estimator(**params)
             self._params = params
@@ -21,13 +32,36 @@ class TrainerRegressor:
     def params(self):
         return self._params
 
-    def train_test_split(self, X, y):
+    def train_test_split(self, X: pd.DataFrame, y: pd.Series):
+        """
+        Performs the usual sklearn train_test_split method.
+        Parameters
+        ----------
+        X : Dataframe without unwanted variables.
+        y : a pd.Series with the target values.
+
+        Returns
+        -------
+
+        """
 
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
             X, y, test_size=0.75, random_state=16
         )
 
-    def gridsearch_tuning(self, dict_params, kfold_num):
+    def gridsearch_tuning(self, dict_params: Dict, kfold_num: int):
+        """
+        Performs the GridSearch within the model specifications.
+        Saves the best model's configuration for later use.
+        Parameters
+        ----------
+        dict_params : a Dict with a combination of parameters.
+        kfold_num : number of kfold.
+
+        Returns
+        -------
+
+        """
 
         self._dict_params = dict_params
         grid = GridSearchCV(self._model, self._dict_params, cv=kfold_num)
@@ -40,7 +74,26 @@ class TrainerRegressor:
         except TypeError:
             self._model_opt = self._model.set_params(**self.best_params)
 
-    def mlflow_run(self, model_name, r_name="default_experiment", optimal_param=False):
+    def mlflow_run(
+        self,
+        model_name: str,
+        r_name: str = "default_experiment",
+        optimal_param: bool = False,
+    ):
+        """
+        Trains the model with mlflow context, logging the metrics.
+
+        Parameters
+        ----------
+        model_name :  The model name for log recording.
+        r_name : Run Name for the experiment.
+        optimal_param : If set to True, uses the best model configuration
+        calculated from gridsearch_tuning.
+
+        Returns
+        -------
+
+        """
         with mlflow.start_run(run_name=r_name) as run:
             runID = run.info.run_uuid
             experimentID = run.info.experiment_id
