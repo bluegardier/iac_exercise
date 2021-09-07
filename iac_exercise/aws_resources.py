@@ -1,11 +1,13 @@
+import io
+import os
 import time
+
 import boto3
 import pandas as pd
 from dotenv import load_dotenv
-import io
-import os
 
 load_dotenv()
+
 
 class QueryAthena:
     """
@@ -18,8 +20,8 @@ class QueryAthena:
         self.database = database
         self.folder = "drinks_table/"
         self.bucket = s3_bucket
-        self.s3_input = 's3://' + self.bucket
-        self.s3_output = 's3://' + self.bucket + '/' + self.folder
+        self.s3_input = "s3://" + self.bucket
+        self.s3_output = "s3://" + self.bucket + "/" + self.folder
         self.region_name = os.environ.get("REGION_NAME")
         self.aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
         self.aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
@@ -40,21 +42,21 @@ class QueryAthena:
         """
 
         try:
-            self.client = boto3.client('athena',
-                                       region_name=self.region_name,
-                                       aws_access_key_id=self.aws_access_key_id,
-                                       aws_secret_access_key=self.aws_secret_access_key)
+            self.client = boto3.client(
+                "athena",
+                region_name=self.region_name,
+                aws_access_key_id=self.aws_access_key_id,
+                aws_secret_access_key=self.aws_secret_access_key,
+            )
             response = self.client.start_query_execution(
                 QueryString=q,
-                QueryExecutionContext={
-                    'Database': self.database
-                },
+                QueryExecutionContext={"Database": self.database},
                 ResultConfiguration={
-                    'OutputLocation': self.s3_output,
-                }
+                    "OutputLocation": self.s3_output,
+                },
             )
-            self.filename = response['QueryExecutionId']
-            print('Execution ID: ' + response['QueryExecutionId'])
+            self.filename = response["QueryExecutionId"]
+            print("Execution ID: " + response["QueryExecutionId"])
 
         except Exception as e:
             print(e)
@@ -75,13 +77,19 @@ class QueryAthena:
             res = self.load_conf(q)
         try:
             query_status = None
-            while query_status == 'QUEUED' or query_status == 'RUNNING' or query_status is None:
-                query_status = \
-                self.client.get_query_execution(QueryExecutionId=res["QueryExecutionId"])['QueryExecution']['Status'][
-                    'State']
+            while (
+                query_status == "QUEUED"
+                or query_status == "RUNNING"
+                or query_status is None
+            ):
+                query_status = self.client.get_query_execution(
+                    QueryExecutionId=res["QueryExecutionId"]
+                )["QueryExecution"]["Status"]["State"]
                 print(query_status)
-                if query_status == 'FAILED' or query_status == 'CANCELLED':
-                    raise Exception('Athena query with the string "{}" failed or was cancelled'.format(self.query))
+                if query_status == "FAILED" or query_status == "CANCELLED":
+                    raise Exception(
+                        'Athena query: "{}" failed or was cancelled'.format(self.query)
+                    )
                 time.sleep(10)
             print('Query "{}" finished.'.format(self.query))
 
@@ -100,17 +108,19 @@ class QueryAthena:
 
         """
         try:
-            self.resource = boto3.resource('s3',
-                                           region_name=self.region_name,
-                                           aws_access_key_id=self.aws_access_key_id,
-                                           aws_secret_access_key=self.aws_secret_access_key
-                                           )
+            self.resource = boto3.resource(
+                "s3",
+                region_name=self.region_name,
+                aws_access_key_id=self.aws_access_key_id,
+                aws_secret_access_key=self.aws_secret_access_key,
+            )
 
-            response = self.resource \
-                .Bucket(self.bucket) \
-                .Object(key=self.folder + self.filename + '.csv') \
+            response = (
+                self.resource.Bucket(self.bucket)
+                .Object(key=self.folder + self.filename + ".csv")
                 .get()
+            )
 
-            return pd.read_csv(io.BytesIO(response['Body'].read()), encoding='utf8')
+            return pd.read_csv(io.BytesIO(response["Body"].read()), encoding="utf8")
         except Exception as e:
             print(e)
