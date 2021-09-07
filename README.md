@@ -28,7 +28,7 @@ We are using the following Data Source:
 ## Repository Structure
 - ```terraform```: The terraform configuration to create the required architecure. See the ```Installation``` section for more details.
 
-- ```analysis```:  A Jupyter Notebook demonstration on how the data created through the pipeline, was used to train a machine learning model.
+- ```analysis```:  A Jupyter Notebook demonstration on how the fetched data was used to train a machine learning model.
 
 - ```iac_exercise```: The project modules.
 
@@ -41,8 +41,7 @@ Run the command below on the root directory to install the proper dependencies.
 pip install .
 ```
 
-To replicate the architecture, a few steps are required before running it.
-Its necessary to set your **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **REGION_NAME** as environment variables for account replication.
+To replicate the architecture, its necessary to set your **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **REGION_NAME** as environment variables.
 
 ```
 export AWS_ACCESS_KEY_ID="anaccesskey"
@@ -50,7 +49,7 @@ export AWS_SECRET_ACCESS_KEY="asecretkey"
 export AWS_DEFAULT_REGION="yourregion"
 ```
 
-The second step is to zip the lambda functions so that they can be uploaded properly into your AWS account.
+The next step is to zip the lambda functions so that they can be uploaded properly into your AWS account.
 ```
 cd terraform
 cd lambda
