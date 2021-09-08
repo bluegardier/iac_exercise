@@ -63,6 +63,7 @@ From the root directory, run the commands below:
 
 ```
 cd terraform
+terraform init
 terraform apply --auto-approve
 ```
 
