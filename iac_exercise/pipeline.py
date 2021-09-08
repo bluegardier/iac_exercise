@@ -24,8 +24,7 @@ final_pipeline = [
     (
         config.model_config.catboost_model_name,
         CatBoostRegressor(
-            **config.model_config.catboost_best_params,
-            logging_level=config.model_config.catboost_logging_state,
+            **config.model_config.catboost_best_params
         ),
     ),
 ]
